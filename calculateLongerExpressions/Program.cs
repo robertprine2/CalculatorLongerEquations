@@ -13,6 +13,7 @@ namespace calculateLongerExpressions
     {
         static void Main(string[] args)
         {
+            // allows user to keep making calculations until they type "exit"
             bool displayMenu = true;
             do
             {
@@ -35,7 +36,7 @@ namespace calculateLongerExpressions
             int operatorCount = operation.Matches(problem).Count;
 
             //*************************************
-            // MIGHT HAVE TO TAKE OUT NAMES OF MATCHES FOR EASE OF FOR LOOPING LATER
+            // had to take out variable names of matches for ease of looping
             //*************************************
 
             // initial regex string since it will need to be this at minimum
@@ -50,18 +51,20 @@ namespace calculateLongerExpressions
             //*****************************
             //adding the $ isn't working for some reason
             //*****************************
+
             // add $ to end to make sure there are no trailing operators
             regexSearch += "$";
 
             // regex string to gather all operators and numbers
             var regexItem = new Regex(@"" + regexSearch + "");
             var matchItem = regexItem.Match(problem);
-
+            
+            // user types "exit" quit the program 
             if (problem.Equals("exit", StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
-
+            // as long as regex gets a successful match
             else if (matchItem.Success)
             {
                 List<string> userProblem = new List<string>();
@@ -78,30 +81,31 @@ namespace calculateLongerExpressions
                 {
                     question += (userProblem[i] + " ");
                 }
-
+                // calls the method to multiply and divide and stores return in a list
                 List<string> needsAddSubtract = calculateMD(userProblem);
-
+                // calls the method to add and subtract and stores the response as a float
                 float answer = calculateAS(needsAddSubtract);
-
+                // provides the answer
                 Console.WriteLine("The answer to {0} is {1:#,#0.#####}.", question, answer);
-
+                // starts the program over
                 return true;
             }
-
+            // Writes an invalid entry error to console
             else
             {
                 Console.WriteLine("Your entry is invalid. Please only enter numbers and operators. Also, don't begin or trail your equation with an operator. :)");
+                // starts the program over
                 return true;
             }
         }
-
+        // calculates multiplication and division
         public static List<string> calculateMD(List<string> userProblem)
         {
             List<string> doubleProblem = new List<string>();
 
             // int for how often the switch hits * and /
             int countHappens = 1;
-
+            // loop through each match in the userProblem list
             for (int i = 0; i < userProblem.Count; i++)
             {
                 switch(userProblem[i])
@@ -148,17 +152,20 @@ namespace calculateLongerExpressions
             } // end of for loop through switch
             return doubleProblem;
         } // end of calculateMD method
+        // method to calculate adding and subtracting
         public static float calculateAS(List<string> needsAddSubtract)
         {
+            // places the first list item as the answer to add/subtract from
             float answer = float.Parse(needsAddSubtract[0], CultureInfo.InvariantCulture.NumberFormat);
- 
+            // loops through list of numbers that need to be added or subtracted still
             for (int i = 0; i < needsAddSubtract.Count; i++)
             {
+                // if the next list item is a + add the following list item to answer
                 if (needsAddSubtract[i] == "+")
                 {
                     answer += float.Parse(needsAddSubtract[i + 1], CultureInfo.InvariantCulture.NumberFormat);
                 }
-
+                // if the next list item is a - subtract the following list item from the answer
                 else if (needsAddSubtract[i] == "-")
                 {
                     answer -= float.Parse(needsAddSubtract[i + 1], CultureInfo.InvariantCulture.NumberFormat);
