@@ -90,7 +90,7 @@ namespace calculateLongerExpressions
 
             else
             {
-                Console.WriteLine("Your entry is invalid. Please only enter numbers and operators. :)");
+                Console.WriteLine("Your entry is invalid. Please only enter numbers and operators. Also, don't begin or trail your equation with an operator. :)");
                 return true;
             }
         }
