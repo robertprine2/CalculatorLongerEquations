@@ -47,31 +47,52 @@ namespace calculateLongerExpressions
                 regexSearch += "([+\\-*/]*)\\s*([0-9\\.,]*)\\s*";
             }
 
+            //*****************************
+            //adding the $ isn't working for some reason
+            //*****************************
+            // add $ to end to make sure there are no trailing operators
+            regexSearch += "$";
+
             // regex string to gather all operators and numbers
             var regexItem = new Regex(@"" + regexSearch + "");
             var matchItem = regexItem.Match(problem);
 
-            List<string> userProblem = new List<string>();
-
-            // for loop to construct userProblem string without white space
-            for (int i = 1; i < (operatorCount * 2 + 2); i++)
+            if (problem.Equals("exit", StringComparison.OrdinalIgnoreCase))
             {
-                userProblem.Add(matchItem.Groups[i].Value);
+                return false;
             }
 
-            List<string> needsAddSubtract = calculateMD(userProblem);
-
-            float answer = calculateAS(needsAddSubtract);
-            
-            // remove later
-            for (int i = 0; i < needsAddSubtract.Count; i++)
+            else if (matchItem.Success)
             {
-                Console.WriteLine(needsAddSubtract[i]);             
+                List<string> userProblem = new List<string>();
+
+                // for loop to construct userProblem string without white space
+                for (int i = 1; i < (operatorCount * 2 + 2); i++)
+                {
+                    userProblem.Add(matchItem.Groups[i].Value);
+                }
+
+                string question = "";
+                // takes out white space for a prettier question equation
+                for (int i = 0; i < userProblem.Count; i++)
+                {
+                    question += (userProblem[i] + " ");
+                }
+
+                List<string> needsAddSubtract = calculateMD(userProblem);
+
+                float answer = calculateAS(needsAddSubtract);
+
+                Console.WriteLine("The answer to {0} is {1:#,#0.#####}.", question, answer);
+
+                return true;
             }
 
-            Console.WriteLine("The answer to {0} is {1}.", matchItem, answer);
-
-            return true;
+            else
+            {
+                Console.WriteLine("Your entry is invalid. Please only enter numbers and operators. :)");
+                return true;
+            }
         }
 
         public static List<string> calculateMD(List<string> userProblem)
