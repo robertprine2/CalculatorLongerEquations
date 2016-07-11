@@ -4,3 +4,9 @@ C:\Users\rober_000\Desktop\C#\calculateLongerExpressions\calculateLongerExpressi
 C:\Users\rober_000\Desktop\C#\calculateLongerExpressions\calculateLongerExpressions\obj\Debug\calculateLongerExpressions.csprojResolveAssemblyReference.cache
 C:\Users\rober_000\Desktop\C#\calculateLongerExpressions\calculateLongerExpressions\obj\Debug\calculateLongerExpressions.exe
 C:\Users\rober_000\Desktop\C#\calculateLongerExpressions\calculateLongerExpressions\obj\Debug\calculateLongerExpressions.pdb
+C:\Users\rober_000\Desktop\C#\CalculatorLongerEquations\calculateLongerExpressions\bin\Debug\calculateLongerExpressions.exe.config
+C:\Users\rober_000\Desktop\C#\CalculatorLongerEquations\calculateLongerExpressions\obj\Debug\calculateLongerExpressions.exe
+C:\Users\rober_000\Desktop\C#\CalculatorLongerEquations\calculateLongerExpressions\obj\Debug\calculateLongerExpressions.pdb
+C:\Users\rober_000\Desktop\C#\CalculatorLongerEquations\calculateLongerExpressions\bin\Debug\calculateLongerExpressions.exe
+C:\Users\rober_000\Desktop\C#\CalculatorLongerEquations\calculateLongerExpressions\bin\Debug\calculateLongerExpressions.pdb
+C:\Users\rober_000\Desktop\C#\CalculatorLongerEquations\calculateLongerExpressions\obj\Debug\calculateLongerExpressions.csprojResolveAssemblyReference.cache

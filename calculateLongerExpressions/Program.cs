@@ -51,17 +51,101 @@ namespace calculateLongerExpressions
             var regexItem = new Regex(@"" + regexSearch + "");
             var matchItem = regexItem.Match(problem);
 
-            string userProblem = "";
-            
+            List<string> userProblem = new List<string>();
+
             // for loop to construct userProblem string without white space
             for (int i = 1; i < (operatorCount * 2 + 2); i++)
             {
-                userProblem += matchItem.Groups[i].Value;
+                userProblem.Add(matchItem.Groups[i].Value);
             }
 
-            Console.WriteLine(userProblem);
-            return true;
+            List<string> needsAddSubtract = calculateMD(userProblem);
+
+            float answer = calculateAS(needsAddSubtract);
             
+            // remove later
+            for (int i = 0; i < needsAddSubtract.Count; i++)
+            {
+                Console.WriteLine(needsAddSubtract[i]);             
+            }
+
+            Console.WriteLine("The answer to {0} is {1}.", matchItem, answer);
+
+            return true;
         }
+
+        public static List<string> calculateMD(List<string> userProblem)
+        {
+            List<string> doubleProblem = new List<string>();
+
+            // int for how often the switch hits * and /
+            int countHappens = 1;
+
+            for (int i = 0; i < userProblem.Count; i++)
+            {
+                switch(userProblem[i])
+                {
+                    case "*":
+                        // change numbers around operator to floats from strings
+                        float a = float.Parse(doubleProblem[i - countHappens], CultureInfo.InvariantCulture.NumberFormat);
+                        float b = float.Parse(userProblem[i + 1], CultureInfo.InvariantCulture.NumberFormat);
+                        // multiplies the numbers around the *
+                        float multiply = a * b;
+                        // removes the previous number from the list since it was used in the equation above
+                        doubleProblem.RemoveAt(i - countHappens);
+                        countHappens++;
+                        // removes the next number in the string since it was used in the equation above
+                        userProblem.RemoveAt(i+1);
+                        // *************might have to do i++ depending on if it moves all following items back an interation
+                        // convert floats back to strings
+                        string strMultiply = Convert.ToString(multiply);
+                        // adds the answer to the doubleProblem list for future adding and subtracting
+                        doubleProblem.Add(strMultiply);
+                        break;
+                    case "/":
+                        // change number strings around / to floats for solving
+                        float c = float.Parse(doubleProblem[i - countHappens], CultureInfo.InvariantCulture.NumberFormat);
+                        float d = float.Parse(userProblem[i + 1], CultureInfo.InvariantCulture.NumberFormat);
+           
+                        // divides the numbers around the /
+                        float divide = c / d;
+                        // removes the previous number from the list since it was used in the equation above
+                        doubleProblem.RemoveAt(i - countHappens);
+                        countHappens++;
+                        // removes the next number in the string since it was used in the equation above
+                        userProblem.RemoveAt(i + 1);
+                        // *************might have to do i++ depending on if it moves all following items back an interation
+                        // convert floats back to strings
+                        string strDivide = Convert.ToString(divide);
+                        // adds the answer to the doubleProblem list for future adding and subtracting
+                        doubleProblem.Add(strDivide);
+                        break;
+                    default:
+                        doubleProblem.Add(userProblem[i]);
+                        break;
+                } // end of switch
+            } // end of for loop through switch
+            return doubleProblem;
+        } // end of calculateMD method
+        public static float calculateAS(List<string> needsAddSubtract)
+        {
+            float answer = float.Parse(needsAddSubtract[0], CultureInfo.InvariantCulture.NumberFormat);
+ 
+            for (int i = 0; i < needsAddSubtract.Count; i++)
+            {
+                if (needsAddSubtract[i] == "+")
+                {
+                    answer += float.Parse(needsAddSubtract[i + 1], CultureInfo.InvariantCulture.NumberFormat);
+                }
+
+                else if (needsAddSubtract[i] == "-")
+                {
+                    answer -= float.Parse(needsAddSubtract[i + 1], CultureInfo.InvariantCulture.NumberFormat);
+                }
+
+            } // end of for loop for switch
+
+            return answer;
+        } // end of calculatAS method
     }
 }
